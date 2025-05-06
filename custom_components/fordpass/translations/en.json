@@ -1,21 +1,48 @@
 {
     "config": {
         "abort": {
-            "already_configured": "Account is already configured"
+            "already_configured": "Account is already configured",
+            "no_vehicles": "No vehicles on account or all are configured already"
         },
         "error": {
             "cannot_connect": "Failed to connect",
-            "invalid_auth": "Invalid authentication",
+            "invalid_auth": "Invalid Credentials",
             "invalid_vin": "Vin not found for given account",
+            "invalid_mobile": "Mobile number as username must be specified if using South African Region",
+            "invalid_token": "Token is invalid, please check you copied the correct token from the Header Location, it should start with fordapp://",
             "unknown": "Unexpected error"
         },
         "step": {
+            "token": {
+                "title": "Setup Token",
+                "description": "Please enter the full token from the Location: header once logging in using the URL below",
+                "data": {
+                    "url": "URL",
+                    "tokenstr": "Token"
+                }
+            },
             "user": {
                 "data": {
                     "password": "FordPass Password",
                     "username": "FordPass Username (Email)",
-                    "vin": "VIN",
                     "region" : "FordPass Region"
+                },
+                "data_description": {
+                    "username": "If using a mobile instead of email please enter your number (minus initial 0) also include + and the country code (e.g. +99123456789)"
+                }   
+            },
+            "vehicle": {
+                "title": "Select vehicle to add",
+                "description": "Only vehicles not currently added will be shown",
+                "data": {
+                    "vin": "VIN"
+                }
+            },
+            "vin": {
+                "title": "Manual Vin Entry",
+                "description": "Please enter your VIN number manually as no vehicles could be found automatticaly.",
+                "data": {
+                    "vin": "Vin Number for vehicle"
                 }
             }
         }
@@ -25,10 +52,38 @@
             "init": {
                 "data": {
                     "pressure_unit": "Unit of Pressure",
-                    "distance_unit": "Unit of Distance"
+                    "distance_unit": "Unit of Distance",
+                    "distance_conversion": "Disable distance conversion",
+                    "update_interval": "Interval to poll Fordpass API (Seconds)"
                 },
                 "description": "Configure fordpass options"
             }
         }
-    }
+    }, 
+    "services": {
+        "refresh_status": {
+            "name": "Refresh Vehicle Status",
+            "description": "Poll car for latest status (Takes up to 5mins to update once this function has been run!)",
+            "fields": {
+                "vin": {
+                    "name": "VIN",
+                    "description": "Enter a vin number to only refresh the specified vehicle (Default refreshes all added vehicles)"
+                }
+            }
+        },
+        "clear_tokens": {
+            "name": "Clear Tokens",
+            "description": "Clear the token cache"
+        },
+        "reload": {
+            "name": "Reload",
+            "description": "Reload the Fordpass Integration"
+        },
+        "poll_api": {
+            "name": "Poll API",
+            "description": "Manually poll API for data update (Warning: doing this too often could result in a ban)"
+        }
+    },
+    "title": "Fordpass"
 }
+    
